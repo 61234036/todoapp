@@ -1,17 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/create', [HomeController::class, 'create']);
@@ -26,3 +21,18 @@ Route::post('/category/add', [CategoryController::class, 'add']);
 Route::get('/category/edit/{id}', [CategoryController::class, 'edit']);
 Route::post('/category/update/{id}', [CategoryController::class, 'edit']);
 Route::get('/category/delete/{id}', [CategoryController::class, 'delete']);
+
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/doLogin', [AuthController::class, 'doLogin']);
+Route::get('/register', [AuthController::class, 'register']);
+Route::post('/doRegister', [AuthController::class, 'doRegister']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/เพิ่มผู้ใช้งานตัวอย่าง', function(){
+    $user = new User();
+    $user->name = "dejai ใจดี";
+    $user->email = "sc@gmail.com";
+    $user->password = Hash::make("4321");
+    $user->save();
+    return "Success! โปรดอย่ารีเฟรชหน้านี้มันจะเพิ่มสามชายอีกคน หรือไม่ก็ฟ้องว่าอีเมล์ซ้ำ";
+});
